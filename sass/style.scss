@@ -1,0 +1,10 @@
+$globs : #fff;
+
+.container{
+	background-color: $globs;
+	box-shadow:1px 1px 1px #000;
+}
+.watch{
+	color:red;
+	border: 1px solid #000;
+}

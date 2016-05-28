@@ -3,6 +3,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+#不加载所有依赖插件
+node_modules/
+
 # Package Files #
 *.jar
 *.war
