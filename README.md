@@ -8,10 +8,17 @@
 ```
 $ npm install
 ```
-#### 安装插件完成后就可以执行下面的命令编译工程了。
 
+#### 因插件已有功能是将版本号追加到文件名称上，如：
 
-#### 需要更改一下添加版本号插件
+```html
+<!-- 插件已有版本号追加方式 -->
+<script type="text/javascript" src="../js/app-b6a3ad0a4b.js"></script>
+<!-- 更改后 -->
+<script type="text/javascript" src="../js/app.js?v=b6a3ad0a4b"></script>
+```
+
+#### 所以需要更改一下添加版本号插件
 ```js
 //node_modules\gulp-rev\index.js 	第143行 
 manifest[originalFile] = revisionedFile; 
@@ -35,15 +42,7 @@ regexp: new RegExp( pattern, 'g' ),
 //更新为: 
 regexp: new RegExp('('+pattern+'\\?v\\=\\w{10}'+'\|'+pattern+')', 'g'),
 ```
-
-#### 因插件已有功能是将版本号追加到文件名称上，如：
-
-```html
-<!-- 插件已有版本号追加方式 -->
-<script type="text/javascript" src="../js/app-b6a3ad0a4b.js"></script>
-<!-- 更改后 -->
-<script type="text/javascript" src="../js/app.js?v=b6a3ad0a4b"></script>
-```
+#### 安装插件更改完成后就可以执行下面的命令编译工程了。
 
 ## 执行添加版本号
 
