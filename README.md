@@ -39,13 +39,15 @@ gulp.task('jshint', function() {
 ```
 ## gulp所需要依赖的插件
 
-- [gulp-rev-replace](https://github.com/jamesknelson/gulp-rev-replace) - Rewrite occurences of filenames which have been renamed
-- [gulp-rev-css-url](https://github.com/galkinrost/gulp-rev-css-url) - Override URLs in CSS files with the revved ones
-- [gulp-rev-outdated](https://github.com/shonny-ua/gulp-rev-outdated) - Old static asset revision files filter
-- [gulp-rev-collector](https://github.com/shonny-ua/gulp-rev-collector) - Static asset revision data collector
-- [rev-del](https://github.com/callumacrae/rev-del) - Delete old unused assets
-- [gulp-rev-delete-original](https://github.com/nib-health-funds/gulp-rev-delete-original) - Delete original files after rev
-- [gulp-rev-loader](https://github.com/adjavaherian/gulp-rev-loader) - Use rev-manifest with webpack
+- [gulp-uglify](https://www.npmjs.com/search?q=gulp-uglify) - 压缩js
+- [gulp-autoprefixer](https://github.com/postcss/autoprefixer#options) - 自动处理浏览器前缀
+- [gulp-minify-css](https://www.npmjs.com/search?q=gulp-minify-css) - 压缩css
+- [gulp-imagemin](https://www.npmjs.com/search?q=gulp-imagemin) - 压缩图片
+- [gulp-jshint](https://www.npmjs.com/search?q=gulp-jshint) - 语法检查
+- [gulp-clean](https://www.npmjs.com/search?q=gulp-clean) - 删除文件，避免缓存
+- [gulp-concat](https://www.npmjs.com/search?q=gulp-concat) - 合并文件
+- [gulp-rev-collector](https://www.npmjs.com/search?q=gulp-rev-collector) - 添加文件版本号
+- [gulp-sequence](https://www.npmjs.com/search?q=gulp-sequence) - 任务队列，控制任务执行顺序
 
 ## License
 

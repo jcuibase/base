@@ -1,20 +1,20 @@
 'use strict';
 
 var gulp = require('gulp'),
-	jshint = require('gulp-jshint'), //语法检查
-	uglify = require('gulp-uglify'), //压缩JS
-	concat = require('gulp-concat'), //合并文件
+	jshint = require('gulp-jshint'), 		//语法检查
+	uglify = require('gulp-uglify'), 		//压缩JS
+	concat = require('gulp-concat'), 		//合并文件
 	autoprefixer = require('gulp-autoprefixer'), //自动添加css 厂商前缀
-	cssmin = require('gulp-minify-css'), //压缩CSS
-	imagemin = require('gulp-imagemin'), //压缩图片
+	cssmin = require('gulp-minify-css'), 	//压缩CSS
+	imagemin = require('gulp-imagemin'), 	//压缩图片
 
-	sequence = require('gulp-sequence'), //任务队列-控制人物执行顺序
-	stylish = require('jshint-stylish'), //jshint检查输出函数
-	rev = require('gulp-rev'), //生成资源的json文件
+	sequence = require('gulp-sequence'), 	//任务队列-控制人物执行顺序
+	stylish = require('jshint-stylish'), 	//jshint检查输出函数
+	rev = require('gulp-rev'), 				//生成资源的json文件
 	collector = require('gulp-rev-collector'), //替换所有的引用
-	clean = require('gulp-clean'), //清空文件
-	rename = require('gulp-rename'), //文件重命名
-	plumber = require('gulp-plumber'); //防止编译错误后，watch函数不在执行
+	clean = require('gulp-clean'), 			//清空文件
+	rename = require('gulp-rename'), 		//文件重命名
+	plumber = require('gulp-plumber'); 		//防止编译错误后，watch函数不在执行
 
 
 var filePath = {
@@ -58,6 +58,16 @@ gulp.task('jshint', function() {
 //压缩css
 gulp.task('minifycss', function() {
 	return gulp.src(filePath.inPath.css)
+		.pipe(autoprefixer({
+			browsers: [
+		    'last 2 versions',
+		    'safari 5',
+		    'ie 8',
+		    'ie 9',
+		    'opera 12.1',
+		  ],
+		  cascade: false
+		}))
 		.pipe(cssmin())
 		.pipe(gulp.dest(filePath.outPath.css));
 });
@@ -149,19 +159,28 @@ gulp.task('cleanMin', function() {
 //定义任务
 gulp.task('sequence_all',
 	sequence(
-		['clean'], ['outfonts'], ['jshint', 'minifyimage', 'minifycss'], ['concatjs'], ['revjs', 'revcss', 'revimage'], ['revCollHtml', 'revCollCss']
+		['clean'], 
+		['outfonts'], 
+		['jshint', 'minifyimage', 'minifycss'], 
+		['concatjs'], 
+		['revjs', 'revcss', 'revimage'], 
+		['revCollHtml', 'revCollCss']
 	)
 );
 
 gulp.task('sequence_rev',
 	sequence(
-		['cleanRev'], ['revjs', 'revcss', 'revimage'], ['revCollHtml', 'revCollCss']
+		['cleanRev'], 
+		['revjs', 'revcss', 'revimage'], 
+		['revCollHtml', 'revCollCss']
 	)
 );
 
 gulp.task('sequence_min',
 	sequence(
-		['cleanMin'], ['jshint', 'minifyimage', 'minifycss'], ['concatjs']
+		['cleanMin'], 
+		['jshint', 'minifyimage', 'minifycss'], 
+		['concatjs']
 	)
 );
 
