@@ -10,8 +10,8 @@ var gulp = require('gulp'),
 
 	sequence = require('gulp-sequence'), //任务队列-控制人物执行顺序
 	stylish = require('jshint-stylish'), //jshint检查输出函数
-	rev = require('gulp-rev'),				//生成资源的json文件
-	collector = require('gulp-rev-collector'),//替换所有的引用
+	rev = require('gulp-rev'), //生成资源的json文件
+	collector = require('gulp-rev-collector'), //替换所有的引用
 	clean = require('gulp-clean'), //清空文件
 	rename = require('gulp-rename'), //文件重命名
 	plumber = require('gulp-plumber'); //防止编译错误后，watch函数不在执行
@@ -23,21 +23,21 @@ var filePath = {
 		css: './css/**/*.css',
 		image: './images/*',
 		html: './html/**/*.html',
-		fonts : './fonts/*'
+		fonts: './fonts/*'
 	},
 	outPath: {
 		js: './dist/js',
 		css: './dist/css',
 		image: './dist/images',
 		html: './dist/html',
-		fonts : './dist/fonts'
+		fonts: './dist/fonts'
 	},
-	revPath : {
-		basePath : './dist/rev/**/*.json',
-		js : './dist/rev/js',
+	revPath: {
+		basePath: './dist/rev/**/*.json',
+		js: './dist/rev/js',
 		css: './dist/rev/css',
-		image : './dist/rev/image',
-		fonts : './dist/rev/fonts'
+		image: './dist/rev/image',
+		fonts: './dist/rev/fonts'
 	}
 };
 
@@ -45,12 +45,11 @@ var filePath = {
 gulp.task('jshint', function() {
 	return gulp.src(filePath.inPath.js)
 		.pipe(plumber())
-		.pipe(jshint()) 				//语法检查
+		.pipe(jshint()) //语法检查
 		.pipe(jshint.reporter(stylish)) //检查结果输出
 		.pipe(gulp.dest(filePath.outPath.js))
-		.pipe(uglify()) 				//压缩
+		.pipe(uglify()) //压缩
 		.pipe(rename(function(path) {
-			//path.dirname += "/min";
 			path.basename += ".min";
 			path.extname = ".js";
 		}))
@@ -87,42 +86,42 @@ gulp.task('concatjs', function() {
 //根据文件的hash码，生成资源文件
 gulp.task('revjs', function() {
 	return gulp.src(filePath.outPath.js + '/**/*.js')
-        .pipe(rev())
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(filePath.revPath.js));
+		.pipe(rev())
+		.pipe(rev.manifest())
+		.pipe(gulp.dest(filePath.revPath.js));
 });
 gulp.task('revcss', function() {
 	return gulp.src(filePath.outPath.css + '/**/*.css')
-        .pipe(rev())
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(filePath.revPath.css));
+		.pipe(rev())
+		.pipe(rev.manifest())
+		.pipe(gulp.dest(filePath.revPath.css));
 });
 gulp.task('revimage', function() {
 	return gulp.src(filePath.outPath.image + '/*')
-        .pipe(rev())
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(filePath.revPath.image));
+		.pipe(rev())
+		.pipe(rev.manifest())
+		.pipe(gulp.dest(filePath.revPath.image));
 });
 
 //替换引用文件路径
-gulp.task('revCollHtml', function () {
-    return gulp.src([filePath.revPath.basePath, filePath.inPath.html])
-        .pipe( collector({
-            replaceReved: true,
-        }) )
-        .pipe( gulp.dest(filePath.outPath.html) );
+gulp.task('revCollHtml', function() {
+	return gulp.src([filePath.revPath.basePath, filePath.inPath.html])
+		.pipe(collector({
+			replaceReved: true,
+		}))
+		.pipe(gulp.dest(filePath.outPath.html));
 });
 
 //替换引用img路径
-gulp.task('revCollCss', function () {
-    return gulp.src([filePath.revPath.basePath, filePath.outPath.css + '/**/*.css'])
-        .pipe( collector())
-        .pipe( gulp.dest(filePath.outPath.css) );
+gulp.task('revCollCss', function() {
+	return gulp.src([filePath.revPath.basePath, filePath.outPath.css + '/**/*.css'])
+		.pipe(collector())
+		.pipe(gulp.dest(filePath.outPath.css));
 });
 //输出字体文件
 gulp.task('outfonts', function() {
 	return gulp.src(filePath.inPath.fonts)
-        .pipe(gulp.dest(filePath.outPath.fonts));
+		.pipe(gulp.dest(filePath.outPath.fonts));
 });
 
 //清空所有已输出文件，避免文件缓存
@@ -150,28 +149,19 @@ gulp.task('cleanMin', function() {
 //定义任务
 gulp.task('sequence_all',
 	sequence(
-		['clean'], 
-		['outfonts'],
-		['jshint', 'minifyimage', 'minifycss'], 
-		['concatjs'],
-		['revjs', 'revcss', 'revimage'],
-		['revCollHtml','revCollCss']
+		['clean'], ['outfonts'], ['jshint', 'minifyimage', 'minifycss'], ['concatjs'], ['revjs', 'revcss', 'revimage'], ['revCollHtml', 'revCollCss']
 	)
 );
 
 gulp.task('sequence_rev',
 	sequence(
-		['cleanRev'],
-		['revjs', 'revcss', 'revimage'],
-		['revCollHtml','revCollCss']
+		['cleanRev'], ['revjs', 'revcss', 'revimage'], ['revCollHtml', 'revCollCss']
 	)
 );
 
 gulp.task('sequence_min',
 	sequence(
-		['cleanMin'],
-		['jshint', 'minifyimage', 'minifycss'],
-		['concatjs']
+		['cleanMin'], ['jshint', 'minifyimage', 'minifycss'], ['concatjs']
 	)
 );
 
@@ -181,8 +171,3 @@ gulp.task('build', ['sequence_all']);
 gulp.task('revFile', ['sequence_rev']);
 //压缩js
 gulp.task('min', ['sequence_min']);
-
-
-
-
-
