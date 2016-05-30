@@ -1,0 +1,24 @@
+@charset 'UTF-8';
+
+.container{
+  background-color: #fff;
+  box-shadow:1px 1px 1px #000;
+}
+
+.watch{
+  font-size: 30px !important;
+  margin-left: 30px;
+  color: #A615D4;
+}
+
+.footer{
+  float: left;
+  display: block;
+  height: 394px;
+  width: 591px;
+  background: url(../images/1_lichun.jpg) no-repeat;
+}
+
+.footer+div{
+  float: left;
+}

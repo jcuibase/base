@@ -5,6 +5,7 @@
 
 #不加载所有依赖插件
 node_modules/
+dist/
 
 # Package Files #
 *.jar
