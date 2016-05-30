@@ -3,6 +3,13 @@
 压缩JS、CSS、图片
 为文件添加版本号
 
+## 开始使用时，第一步：
+### 在项目的根目录下执行
+
+```
+$ npm install
+```
+
 ## 执行添加版本号
 
 ```
@@ -48,6 +55,7 @@ gulp.task('jshint', function() {
 - [gulp-concat](https://www.npmjs.com/search?q=gulp-concat) - 合并文件
 - [gulp-rev-collector](https://www.npmjs.com/search?q=gulp-rev-collector) - 添加文件版本号
 - [gulp-sequence](https://www.npmjs.com/search?q=gulp-sequence) - 任务队列，控制任务执行顺序
+- [gulp-rename](https://www.npmjs.com/search?q=gulp-rename) - 更改文件名称
 
 ## License
 
