@@ -10,6 +10,41 @@ $ npm install
 ```
 #### 安装插件完成后就可以执行下面的命令编译工程了。
 
+
+#### 需要更改一下添加版本号插件
+```js
+//node_modules\gulp-rev\index.js 	第143行 
+manifest[originalFile] = revisionedFile; 
+//更新为: 
+manifest[originalFile] = originalFile + '?v=' + file.revHash;
+
+
+//nodemodules\gulp-rev\nodemodules\rev-path\index.js 	第10行
+return filename + '-' + hash + ext; 
+//更新为: 
+return filename + ext;
+
+//node_modules\gulp-rev-collector\index.js 	第31行
+if ( path.basename(json[key]).replace(new RegExp( opts.revSuffix ), '' ) !== path.basename(key) ) { 
+//更新为: 
+if ( path.basename(json[key]).split('?')[0] !== path.basename(key) ) {
+
+
+//node_modules\gulp-rev-collector\index.js 	第105行
+regexp: new RegExp( pattern, 'g' ),
+//更新为: 
+regexp: new RegExp('('+pattern+'\\?v\\=\\w{10}'+'\|'+pattern+')', 'g'),
+```
+
+#### 因插件已有功能是将版本号追加到文件名称上，如：
+
+```html
+<!-- 插件已有版本号追加方式 -->
+<script type="text/javascript" src="../js/app-b6a3ad0a4b.js"></script>
+<!-- 更改后 -->
+<script type="text/javascript" src="../js/app.js?v=b6a3ad0a4b"></script>
+```
+
 ## 执行添加版本号
 
 ```
